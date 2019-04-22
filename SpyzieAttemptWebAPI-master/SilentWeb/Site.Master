@@ -1,0 +1,111 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="SilentWeb.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - Silent</title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link href="~/Pictures/logo.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/MyCss/navbar.css" rel="stylesheet" type="text/css" >
+    <link href="~/MyCss/chat.css" rel="stylesheet" type="text/css" >
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJhhhV3E0Gnv64iIuTh_j90GAVgPE5ZpE"></script>
+
+</head>
+<body>
+    
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="bootstrap" />
+                <asp:ScriptReference Name="respond" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+        
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" runat="server" href="~/">Silent</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a runat="server" href="~/Default">Home</a></li>
+                        <li><a runat="server" href="~/About">About</a></li>
+                        <li><a runat="server" href="~/Contact">Contact</a></li>
+                        <% if (Request.Cookies["Logged"] != null)
+                            {
+                                Response.Write("<li><a runat='server' onclick='openNav()' class='btn'>Tools</a></li>");
+                            }
+                        %>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a runat="server" onserverclick="LogOut">
+                            <% if (Request.Cookies["Logged"] == null)
+                                {
+                                    Response.Write("Log in");
+                                }
+                                else
+                                {
+                                    Response.Write("Log out");
+                                }
+                            %>
+                            </a></li>
+                        <li><a runat="server" href="~/Register">Register</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div  id="mySidenav" class="sidenav">
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+          <a href="~/ToolPages/Smartphones" runat="server">Smartphones</a>
+          <a href="~/ToolPages/Dashboard" runat="server">Dashboard</a>
+          <a href="~/ToolPages/Applications" runat="server">Applications</a>
+          <a href="~/ToolPages/CallHistory" runat="server">Call history</a>
+          <a href="~/ToolPages/Contacts" runat="server">Contacts</a>
+          <a href="~/ToolPages/LocationHistory" runat="server">Location history</a>
+          <a href="~/ToolPages/Messages" runat="server">Messages</a>
+          <a href="~/ToolPages/Metadata" runat="server">Metadata</a>
+          <a href="~/ToolPages/Photos" runat="server">Photos</a>
+          <a href="~/ToolPages/Trafic" runat="server">Trafic</a>
+          <a href="~/ToolPages/Keylogger" runat="server">Keylogger</a>
+        </div>
+        
+        <div class="container body-content" >
+                    <asp:ContentPlaceHolder ID="MainContent" runat="server">
+                    </asp:ContentPlaceHolder>
+            <hr />
+            <footer>
+                <p>&copy; <%: DateTime.Now.Year %> -Silent</p>
+            </footer>
+        </div>
+        
+    </form>
+    <script src='<%= ResolveUrl("~/MyScripts/navbar.js") %>'></script>
+</body>
+</html>
